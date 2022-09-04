@@ -3,3 +3,4 @@ psaw
 ipykernel
 tqdm
 mysql-connector-python 
+pandas
