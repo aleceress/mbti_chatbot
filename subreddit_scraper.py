@@ -1,3 +1,5 @@
+import multiprocessing
+from statistics import multimode
 import praw
 from psaw import PushshiftAPI
 import mysql.connector
@@ -8,7 +10,7 @@ import sys
 from config import *
 
 # parallelization parameters
-NUMBER_OF_PROCESSES = 14
+NUMBER_OF_PROCESSES = NUMBER_OF_PROCESSES_OVERRIDE or multiprocessing.cpu_count()
 
 
 reddit = praw.Reddit(
@@ -87,7 +89,8 @@ if not is_table_present("comments"):
     )
 
 # adds posts from the specified subreddit
-add_subreddit_posts(SUBREDDIT_NAME)
+subreddit_name = input("name of the subreddit you want to scrape: ")
+add_subreddit_posts(subreddit_name)
 
 sql = """
       SELECT id from posts where id not in (
