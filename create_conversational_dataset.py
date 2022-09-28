@@ -9,6 +9,7 @@ import glob
 from config import *
 
 NUMBER_OF_PROCESSES = 15
+NUMBER_OF_CONTEXTS = 13
 
 # conneting to sql db
 reddit_db = mysql.connector.connect(
@@ -54,7 +55,7 @@ for i in range(NUMBER_OF_PROCESSES):
 
 def generate_comment_chain(comment_id, conversation):
     comment = comments[comments.id == comment_id]
-    if len(comment) == 0 or len(conversation) > 13:
+    if len(comment) == 0 or len(conversation) > NUMBER_OF_CONTEXTS:
         return 
     if  comment.parent_comment.values[0] is None:
         conversation.append(comment.comment_body.values[0])
@@ -71,7 +72,7 @@ def generate_post_conversations(post_id):
         conversation.insert(0, comment_id)
         with open(f"data/infj/conversations{str(int(current_process().name[16:])%NUMBER_OF_PROCESSES).zfill(2)}.csv", 'a') as f:
             writer = csv.writer(f) 
-            writer.writerow(conversation[:13]) 
+            writer.writerow(conversation[:NUMBER_OF_CONTEXTS]) 
 
 # adding conversations in the conversational db in parallel
 post_ids = posts.post_id
