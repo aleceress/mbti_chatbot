@@ -33,7 +33,7 @@ The execution of the script is parallelized, so it writes on N different CSVs - 
 
 The notebook [`training.py`](https://github.com/aleceress/mbti_chatbot/blob/master/training.ipynb) contains the fine-tuning of the [`DialoGPT-medium`](https://github.com/microsoft/DialoGPT) language model on the conversational data, and is mainly an adaptation of the code you can find in [`this notebook`](https://github.com/ncoop57/i-am-a-nerd/blob/master/_notebooks/2020-05-12-chatbot-part-1.ipynb). 
 
-Executing [`demo.py`]() will start the conversation.
+Executing [`demo.py`](https://github.com/aleceress/mbti_chatbot/blob/master/demo.py) will start the conversation.
 
 ## __Running__
 
