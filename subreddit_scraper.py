@@ -26,7 +26,7 @@ def add_subreddit_posts(subreddit_name):
     api = PushshiftAPI()
 
     for post in api.search_submissions(subreddit=subreddit_name):
-        sql = "INSERT INTO posts (id, title, body, subreddit,timestamp) VALUES (%s, %s, %s, %s, %s)"
+        sql = "INSERT INTO posts (id, title, body, subreddit, timestamp) VALUES (%s, %s, %s, %s, %s)"
         try:
             val = (
                 post.id,
@@ -48,12 +48,16 @@ def add_post_comments(post_id):
 
     for comment in post.comments.list():
         try:
-            sql = "INSERT INTO comments (id, body, post_id, timestamp) VALUES (%s, %s, %s, %s)"
+            parent_id = comment.parent_id[3:]
+            if parent_id == post_id:
+                parent_id = None
+            sql = "INSERT INTO comments (id, body, post_id, timestamp, parent_comment) VALUES (%s, %s, %s, %s, %s)"
             val = (
                 comment.id,
                 comment.body,
                 post_id,
                 dt.datetime.utcfromtimestamp(comment.created),
+                parent_id
             )
             cursor.execute(sql, val)
         except:
@@ -89,7 +93,7 @@ if not is_table_present("comments"):
 # adds posts from the specified subreddit
 subreddit_name = input("name of the subreddit you want to scrape: ")
 print("scraping posts...")
-add_subreddit_posts(subreddit_name)
+add_subreddit_posts(SUBREDDIT_NAME)
 
 sql = "SELECT id from posts"
 cursor.execute(sql)

@@ -48,10 +48,10 @@ def add_post_comments(post_id):
 
 cursor = reddit_db.cursor()
 
-sql = """
-    SELECT id from posts where id not in (
-      SELECT post_id from comments
-      )
+sql = f"""
+     SELECT id from posts where id not in (
+        SELECT post_id from comments
+      ) and subreddit = '{SUBREDDIT_NAME}'
       """
 cursor.execute(sql)
 post_ids = cursor.fetchall()
