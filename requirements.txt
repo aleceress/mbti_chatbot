@@ -4,3 +4,11 @@ ipykernel
 tqdm
 mysql-connector-python 
 pandas
+transformers
+torch
+datasets
+sklearn
+tensorboardX
+tensorflow
+jupyter 
+ipywidgets
